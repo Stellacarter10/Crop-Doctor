@@ -1,31 +1,217 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#176b3a">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#176b3a">
 <title>Crop Doctor — Leaf Check</title>
 <style>
-:root{font:18px/1.45 system-ui,sans-serif;color:#173321;background:#edf5ea;--green:#176b3a;--green-dark:#113f29;--green-soft:#e8f3e4;--gold:#e4a927;--muted:#4f6556;--card:#ffffff;--panel:#f5faf3;--line:#5a7f68}*{box-sizing:border-box}html,body{margin:0;padding:0}body{margin:0 auto;padding:12px;max-width:560px;background:linear-gradient(#edf5ea,#e2efe0)}main{background:var(--card);border-radius:20px;padding:18px 16px 14px;box-shadow:0 8px 24px rgba(23,107,58,.08)}h1{font-size:1.55rem;color:var(--green);margin:0 0 .3rem}p{margin:.4rem 0 .9rem}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:block}.field label{display:block;font-weight:700;margin-top:.9rem}.field select,button{width:100%;min-height:54px;margin-top:.45rem;padding:10px 12px;border:2px solid var(--line);border-radius:12px;background:#fff;color:#173321;font:inherit;font-size:1.02rem}.field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#173321 50%),linear-gradient(135deg,#173321 50%,transparent 50%);background-position:calc(100% - 18px) calc(50% - 3px),calc(100% - 12px) calc(50% - 3px);background-size:6px 6px;background-repeat:no-repeat}#quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:.5rem}.symptom-btn{padding:10px 8px;font-size:.95rem;font-weight:700;line-height:1.25;display:flex;align-items:center;justify-content:center;text-align:center;min-height:64px;cursor:pointer;transition:all .15s ease}.symptom-btn.is-selected{background:var(--green);color:white;border-color:var(--green);box-shadow:0 4px 12px rgba(23,107,58,.2)}button:active{transform:translateY(1px)}button:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}#result{margin-top:1rem;padding:16px;background:var(--panel);border-left:5px solid var(--green);border-radius:12px}#result .tag{display:inline-block;padding:.32rem .7rem;border-radius:999px;background:#dfeee0;color:var(--green-dark);font-size:.78rem;font-weight:700;margin-bottom:.7rem}#result h2{font-size:1rem;margin:.25rem 0 .5rem;color:var(--green-dark)}#result h3{font-size:.9rem;margin:.9rem 0 .35rem;color:var(--green-dark)}#result p, #result li{margin:.25rem 0}#result ul{padding-left:1.2rem;margin:.3rem 0 0}.actions{display:flex;gap:10px;margin-top:12px}.ghost-btn{background:#f4f8f1;color:var(--green-dark);border-color:#89a892}small{display:block;margin-top:1rem;color:var(--muted);line-height:1.45}[hidden]{display:none!important}@media(max-width:360px){body{padding:8px}main{padding:12px}.row,#quick{grid-template-columns:1fr}.symptom-btn{min-height:52px}}
+:root {
+  --green: #176b3a;
+  --green-dark: #113f29;
+  --green-soft: #e8f3e4;
+  --gold: #e4a927;
+  --muted: #4f6556;
+  --card: #ffffff;
+  --panel: #f5faf3;
+  --line: #5a7f68;
+  --bg: #edf5ea;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  margin: 0 auto;
+  max-width: 560px;
+  padding: 12px;
+  background: linear-gradient(#edf5ea, #e2efe0);
+  font: 18px/1.45 system-ui, sans-serif;
+  color: #173321;
+}
+main {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 18px 16px 14px;
+  box-shadow: 0 8px 24px rgba(23,107,58,.08);
+}
+h1 {
+  margin: 0 0 .3rem;
+  font-size: 1.55rem;
+  color: var(--green);
+}
+p { margin: .4rem 0 .9rem; }
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.field{ display: block; }
+.field label {
+  display: block;
+  margin-top: .9rem;
+  font-weight: 700;
+}
+select, button {
+  width: 100%;
+  min-height: 54px;
+  margin-top: .45rem;
+  padding: 10px 12px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: #173321;
+  font: inherit;
+  font-size: 1.02rem;
+}
+select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #173321 50%),
+    linear-gradient(135deg, #173321 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+#quick {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: .5rem;
+}
+.symptom-btn {
+  min-height: 64px;
+  padding: 10px 8px;
+  font-size: .95rem;
+  font-weight: 700;
+  line-height: 1.25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.symptom-btn.is-selected {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+  box-shadow: 0 4px 12px rgba(23,107,58,.2);
+}
+button:active { transform: translateY(1px); }
+button:focus-visible, select:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+.ghost-btn {
+  background: #f4f8f1;
+  color: var(--green-dark);
+  border-color: #89a892;
+}
+#result {
+  margin-top: 1rem;
+  padding: 16px;
+  background: var(--panel);
+  border-left: 5px solid var(--green);
+  border-radius: 12px;
+}
+#result .tag {
+  display: inline-block;
+  padding: .32rem .7rem;
+  border-radius: 999px;
+  background: #dfeee0;
+  color: var(--green-dark);
+  font-size: .78rem;
+  font-weight: 700;
+  margin-bottom: .7rem;
+}
+#result h2 {
+  margin: .25rem 0 .5rem;
+  font-size: 1rem;
+  color: var(--green-dark);
+}
+#result h3 {
+  margin: .9rem 0 .35rem;
+  font-size: .9rem;
+  color: var(--green-dark);
+}
+#result p, #result li { margin: .25rem 0; }
+#result ul {
+  padding-left: 1.2rem;
+  margin: .3rem 0 0;
+}
+small {
+  display: block;
+  margin-top: 1rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+[hidden] { display: none !important; }
+@media (max-width: 360px) {
+  body { padding: 8px; }
+  main { padding: 12px; }
+  .row, #quick { grid-template-columns: 1fr; }
+  .symptom-btn { min-height: 52px; }
+}
 </style>
 </head>
-<body><main>
-<h1>🌱 Crop Doctor</h1><p id="subtitle">Choose your crop, then tap a symptom for quick advice. Works offline.</p>
-<div class="row">
-  <div class="field"><label id="crop-label" for="crop">What are you growing?</label><select id="crop"><option>Maize</option><option>Cassava</option><option>Tomato</option><option>Beans</option><option>Cowpea</option><option>Groundnut</option><option>Rice</option><option>Sorghum</option><option>Banana</option><option>Sweet potato</option><option>Onion</option><option>Cabbage</option></select></div>
-  <div class="field"><label id="language-label" for="language">Language</label><select id="language"><option value="en">English</option><option value="sw">Kiswahili</option></select></div>
-</div>
-<label id="symptom-label">Tap the main symptom</label><div id="quick">
-<button class="symptom-btn" data-sign="yellow">🟡 Yellow leaves</button>
-<button class="symptom-btn" data-sign="holes">🐛 Holes / bites</button>
-<button class="symptom-btn" data-sign="spots">🟤 Spots / patches</button>
-<button class="symptom-btn" data-sign="wilting">🌿 Wilting / drooping</button>
-<button class="symptom-btn" data-sign="stunted">📉 Poor growth / stunted</button>
-</div>
-<div class="actions"><button id="reset-btn" class="ghost-btn" type="button">Reset</button></div>
-<section id="result" aria-live="polite" hidden></section>
-<small id="footer-note">Possible causes only, not a sure diagnosis. Check several plants. Use mature compost and clean mulch; ask a local farm adviser if damage spreads quickly. Avoid sprays near harvest and follow local safety advice.</small>
+<body>
+<main>
+  <h1>🌱 Crop Doctor</h1>
+  <p id="subtitle">Choose your crop, then tap a symptom for quick advice. Works offline.</p>
+
+  <div class="row">
+    <div class="field">
+      <label id="crop-label" for="crop">What are you growing?</label>
+      <select id="crop">
+        <option>Maize</option>
+        <option>Cassava</option>
+        <option>Tomato</option>
+        <option>Beans</option>
+        <option>Cowpea</option>
+        <option>Groundnut</option>
+        <option>Rice</option>
+        <option>Sorghum</option>
+        <option>Banana</option>
+        <option>Sweet potato</option>
+        <option>Onion</option>
+        <option>Cabbage</option>
+      </select>
+    </div>
+    <div class="field">
+      <label id="language-label" for="language">Language</label>
+      <select id="language">
+        <option value="en">English</option>
+        <option value="sw">Kiswahili</option>
+      </select>
+    </div>
+  </div>
+
+  <label id="symptom-label">Tap the main symptom</label>
+  <div id="quick">
+    <button class="symptom-btn" data-sign="yellow">🟡 Yellow leaves</button>
+    <button class="symptom-btn" data-sign="holes">🐛 Holes / bites</button>
+    <button class="symptom-btn" data-sign="spots">🟤 Spots / patches</button>
+    <button class="symptom-btn" data-sign="wilting">🌿 Wilting / drooping</button>
+    <button class="symptom-btn" data-sign="stunted">📉 Poor growth / stunted</button>
+  </div>
+
+  <div class="actions">
+    <button id="reset-btn" class="ghost-btn" type="button">Reset</button>
+  </div>
+
+  <section id="result" aria-live="polite" hidden></section>
+  <small id="footer-note">Possible causes only, not a sure diagnosis. Check several plants. Use mature compost and clean mulch; ask a local farm adviser if damage spreads quickly. Avoid sprays near harvest and follow local safety advice.</small>
 </main>
+
 <script>
 const STORAGE_KEY = 'crop-doctor-state';
+
 const translations = {
   en: {
     subtitle: 'Choose your crop, then tap a symptom for quick advice. Works offline.',
@@ -41,7 +227,12 @@ const translations = {
       wilting: 'Wilting / drooping',
       stunted: 'Poor growth / stunted'
     },
-    result: { possible: 'Possible cause', check: 'Check in the field', action: 'Low-cost next step', help: 'Ask for help if…' }
+    result: {
+      possible: 'Possible cause',
+      check: 'Check in the field',
+      action: 'Low-cost next step',
+      help: 'Ask for help if…'
+    }
   },
   sw: {
     subtitle: 'Chagua mazao yako, kisha gusa dalili kwa ushauri wa haraka. Hufanya kazi bila intaneti.',
@@ -57,33 +248,341 @@ const translations = {
       wilting: 'Kulegea / kupungua',
       stunted: 'Ukuaji mbovu / kukosa nguvu'
     },
-    result: { possible: 'Sababu inayowezekana', check: 'Angalia shambani', action: 'Hatua ya gharama ndogo', help: 'Uliza usaidizi kama…' }
+    result: {
+      possible: 'Sababu inayowezekana',
+      check: 'Angalia shambani',
+      action: 'Hatua ya gharama ndogo',
+      help: 'Uliza usaidizi kama…'
+    }
   }
 };
 
-const common={
-  yellow:{cause:'Yellowing often comes from water stress, poor soil fertility, or disease.',check:['Look at soil moisture and drainage.','Check whether the yellowing begins at the leaf tips, edges, or between veins.','Look for other signs like weak growth or leaf streaking.'],action:['Add mature compost or a small balanced fertilizer if the soil is poor.','Use clean mulch and keep water even, not too wet or too dry.'],help:'If the whole field is yellowing quickly or leaves are mottled, ask a local adviser because disease or nutrient problems may be spreading.'},
-  holes:{cause:'Chewing insects or caterpillars may be feeding on the leaves.',check:['Check leaf surfaces, growing tips, and the undersides of leaves.','Look for frass, egg masses, and damaged new growth.'],action:['Hand-pick large pests and egg masses where possible.','Remove weeds around the field and check again in a few days.'],help:'If damage continues after a few days, a local adviser can help identify the pest and suggest safe control.'},
-  spots:{cause:'Spots can result from fungal disease, bacterial infection, or weather damage.',check:['Check whether spots have a yellow halo or dark border.','Look for leaf age, wetness, and crowding in the crop.'],action:['Remove badly affected leaves and avoid wetting the foliage.','Improve airflow and do not compost diseased leaves.'],help:'If many plants are affected, ask a local adviser before treating widely.'},
-  wilting:{cause:'Wilting often means the plant is short of water, roots are damaged, or disease is affecting the stem or roots.',check:['Check soil moisture near the root zone.','Look for root rot, cutworms, or insect damage at the base of the plant.'],action:['Water deeply and evenly when the soil is dry, but avoid waterlogging.','Remove heavily damaged plants and keep beds clean.'],help:'If wilt spreads quickly across several plants, ask a local farm adviser as it may be a disease or pest problem.'},
-  stunted:{cause:'Poor growth may come from low fertility, dry soil, poor drainage, nematodes, or disease.',check:['Compare plant size in several places across the field.','Check roots, soil texture, and whether plants are pale or weak.'],action:['Add compost or a small nutrient source where the soil is poor.','Keep weeds down and improve drainage or watering where needed.'],help:'If most plants are stunted in the same area, a local adviser should inspect the field for soil, pest, or disease problems.'}
+const common = {
+  yellow: {
+    cause: 'Yellowing often comes from water stress, poor soil fertility, or disease.',
+    check: ['Look at soil moisture and drainage.', 'Check whether the yellowing begins at the leaf tips, edges, or between veins.', 'Look for other signs like weak growth or leaf streaking.'],
+    action: ['Add mature compost or a small balanced fertilizer if the soil is poor.', 'Use clean mulch and keep water even, not too wet or too dry.'],
+    help: 'If the whole field is yellowing quickly or leaves are mottled, ask a local adviser because disease or nutrient problems may be spreading.'
+  },
+  holes: {
+    cause: 'Chewing insects or caterpillars may be feeding on the leaves.',
+    check: ['Check leaf surfaces, growing tips, and the undersides of leaves.', 'Look for frass, egg masses, and damaged new growth.'],
+    action: ['Hand-pick large pests and egg masses where possible.', 'Remove weeds around the field and check again in a few days.'],
+    help: 'If damage continues after a few days, a local adviser can help identify the pest and suggest safe control.'
+  },
+  spots: {
+    cause: 'Spots can result from fungal disease, bacterial infection, or weather damage.',
+    check: ['Check whether spots have a yellow halo or dark border.', 'Look for leaf age, wetness, and crowding in the crop.'],
+    action: ['Remove badly affected leaves and avoid wetting the foliage.', 'Improve airflow and do not compost diseased leaves.'],
+    help: 'If many plants are affected, ask a local adviser before treating widely.'
+  },
+  wilting: {
+    cause: 'Wilting often means the plant is short of water, roots are damaged, or disease is affecting the stem or roots.',
+    check: ['Check soil moisture near the root zone.', 'Look for root rot, cutworms, or insect damage at the base of the plant.'],
+    action: ['Water deeply and evenly when the soil is dry, but avoid waterlogging.', 'Remove heavily damaged plants and keep beds clean.'],
+    help: 'If wilt spreads quickly across several plants, ask a local farm adviser as it may be a disease or pest problem.'
+  },
+  stunted: {
+    cause: 'Poor growth may come from low fertility, dry soil, poor drainage, nematodes, or disease.',
+    check: ['Compare plant size in several places across the field.', 'Check roots, soil texture, and whether plants are pale or weak.'],
+    action: ['Add compost or a small nutrient source where the soil is poor.', 'Keep weeds down and improve drainage or watering where needed.'],
+    help: 'If most plants are stunted in the same area, a local adviser should inspect the field for soil, pest, or disease problems.'
+  }
 };
-const special={
-  Maize:{holes:{cause:'Caterpillars, including fall armyworm, may be feeding in the leaf funnel.',check:['Look inside the whorl and check for fresh frass.','Inspect a few plants across the field, not just one damaged area.'],action:['Hand-pick caterpillars and egg masses where practical.','Remove weeds and ask a local adviser about approved biological controls if damage keeps spreading.'],help:'Fall armyworm can spread quickly, so check new leaves and nearby plants early.'},yellow:{cause:'Yellowing may be caused by dry or waterlogged soil, low nutrients, or disease.',check:['Check moisture and drainage in the root zone.','Look for mottled or streaked leaves, especially on new growth.'],action:['Add mature compost and mulch with clean crop residues.','Keep water even and avoid waterlogging.'],help:'If new leaves show mottled streaks, ask a local adviser because disease is more likely.'},wilting:{cause:'Maize can wilt when the soil is too dry, roots are damaged, or disease is affecting the base of the plant.',check:['Check the stem base and root zone for rot, cracks, or insect feeding.','Look at soil moisture and whether the crop is in a low or waterlogged spot.'],action:['Water deeply when the soil is dry, but do not leave the crop waterlogged.','Pull out badly damaged plants if they are dying quickly.'],help:'Wilting in several nearby plants can signal a field problem, so get local advice early.'},stunted:{cause:'Stunted maize often reflects poor soil fertility, water stress, or pest pressure.',check:['Compare several plants across the bed or field.','Look for yellowing, weak roots, or pest feeding near the growing point.'],action:['Add compost or a small balanced nutrient input where needed.','Keep weeds low and improve drainage or watering.'],help:'If the problem is widespread, a local adviser can help check whether it is soil, pest, or disease related.'}},
-  Cassava:{yellow:{cause:'Mottled yellow leaves may indicate cassava mosaic disease, and whiteflies can spread it.',check:['Look for leaf distortion and uneven yellow patterns.','Check the planting material and nearby cassava plants.'],action:['Use healthy cuttings and remove severely diseased plants.','Do not rely on compost to cure virus disease.'],help:'If the disease is spreading, remove infected plants and seek local advice quickly.'},wilting:{cause:'Cassava can wilt when roots are damaged or when severe drought or disease affects the plant.',check:['Check whether the soil is very dry or waterlogged.','Look for root or stem damage around the base.'],action:['Water or improve drainage carefully according to soil condition.','Remove badly affected plants to reduce spread.'],help:'If stems or leaves suddenly collapse, get local advice because disease or root stress may be involved.'},stunted:{cause:'Poor cassava growth may be caused by low fertility, nutrient imbalance, or virus infection.',check:['Compare plant size across the field.','Look for leaf distortion or yellow patterns.'],action:['Use healthy planting material and add compost where soil is poor.','Remove diseased plants before they spread infection.'],help:'Persistent stunting should be checked by a local adviser if it is common across the stand.'}},
-  Tomato:{spots:{cause:'Spots can be blight or other leaf disease.',check:['Check whether leaves are wet and crowded.','Look for lesions spreading from lower leaves upward.'],action:['Remove affected leaves and water at soil level.','Stake or prune for airflow and rotate away from tomatoes and potatoes.'],help:'If disease spreads quickly, ask a local adviser before treating large areas.'},wilting:{cause:'Tomato plants wilt when soil is dry, roots are damaged, or disease is affecting the stem or roots.',check:['Check soil moisture and stem base.','Look for root rot, stem damage, or severe leaf loss.'],action:['Water deeply when needed, but avoid waterlogging.','Remove badly diseased plants and keep beds clean.'],help:'Rapid wilting in several plants may mean root or disease problems, so local help is useful.'},stunted:{cause:'Slow tomato growth often results from poor soil, stress, or disease.',check:['Look for yellow leaves, weak stems, or root issues.','Check whether plants are crowded or waterlogged.'],action:['Improve soil with compost and keep watering consistent.','Thin crowded plants and remove diseased stems.'],help:'If growth is poor across the bed, ask a local adviser to check for disease or nutrient problems.'}},
-  Beans:{spots:{cause:'Leaf spots may be fungal or bacterial disease.',check:['Look for lesions on older leaves and the spread pattern.','Check whether plants are crowded or leaves stay wet.'],action:['Remove badly affected leaves and avoid handling wet plants.','Rotate crops and use clean seed next season.'],help:'If leaf spots spread quickly, local advice can help reduce losses.'},wilting:{cause:'Bean plants can wilt from water stress or root disease.',check:['Check soil moisture and the base of the plant.','Look for narrow stems or root damage.'],action:['Water evenly and improve drainage if needed.','Remove plants showing severe root or stem damage.'],help:'Sudden wilting in clusters may need a field check by a local adviser.'},stunted:{cause:'Poor bean growth may be caused by low soil fertility, water stress, or disease.',check:['Compare plant size across the plot.','Look for yellowing, weak roots, and damaged leaves.'],action:['Add compost where soil is poor and keep moisture steady.','Remove very weak or diseased plants.'],help:'If many plants are stunted, ask a local adviser because the cause may be soil, pest, or disease.'}},
-  Cowpea:{holes:{cause:'Aphids, beetles, or caterpillars may be feeding.',check:['Inspect leaf undersides and growing tips.','Look for damaged new leaves and insect activity.'],action:['Hand-pick larger pests and remove heavily infested leaves.','Keep the field weeded and inspect frequently.'],help:'Regular scouting helps prevent damage from spreading to the whole crop.'},wilting:{cause:'Cowpea can wilt when soil is too dry or roots are damaged.',check:['Check soil moisture and the base of the stem.','Look for feeding damage or root decay.'],action:['Water deeply when needed and avoid waterlogging.','Remove damaged plants if they are collapsing.'],help:'If wilt spreads quickly, ask a local adviser because it may be more than water stress.'},stunted:{cause:'Poor growth may come from low fertility, water problems, or pest pressure.',check:['Compare several plants across the field.','Check for yellowing, weak roots, and feeding damage.'],action:['Add compost and keep weed pressure low.','Water evenly and remove badly affected plants.'],help:'A local adviser can help if stunting is common across the field.'}},
-  Groundnut:{spots:{cause:'Leaf spots may be early or late leaf spot disease.',check:['Look at leaf age and distribution across the field.','Check whether plants are crowded or leaves stay wet.'],action:['Remove crop debris after harvest and rotate with a non-legume crop.','Avoid crowding plants and keep spacing consistent.'],help:'If disease spreads fast, local advice can help plan a safer rotation and treatment.'},wilting:{cause:'Groundnut can wilt from dry soil, root stress, or disease.',check:['Check moisture in the root zone and plant base.','Look for root rots or damage around the crown.'],action:['Water or improve drainage based on soil condition.','Remove weak or dying plants to reduce pressure on the rest.'],help:'If many plants wilt together, inspect the field more closely for root or disease problems.'},stunted:{cause:'Poor growth often reflects poor soil, water stress, or disease.',check:['Compare plants across the whole plot.','Look for yellowing, weak roots, and leaf damage.'],action:['Improve soil with compost and keep watering consistent.','Remove badly affected plants when needed.'],help:'If the issue is widespread, a local adviser should inspect the field.'}},
-  Rice:{yellow:{cause:'Yellowing may be caused by water stress, low nutrients, or pests.',check:['Check water management and the stem base.','Look for insects or nutrient deficiency patterns.'],action:['Keep water conditions steady where possible.','Check field edges and stem bases before adding inputs.'],help:'If yellowing is spreading quickly, a local rice adviser should inspect the field.'},holes:{cause:'Leaf folder or other caterpillars may be feeding.',check:['Check folded leaves and the leaf bases.','Look for fresh feeding and larvae.'],action:['Hand-pick caterpillars and keep field edges clean.','Protect beneficial insects and check again after a few days.'],help:'Repeated feeding across the field may need local pest advice.'},wilting:{cause:'Rice can wilt when water is not managed well or roots are damaged.',check:['Check soil water level and field drainage.','Look for root stress and stem damage.'],action:['Balance water management and improve drainage where needed.','Avoid heavy stress during a hot period.'],help:'If lowering water or improving drainage does not help, local advice is useful.'},stunted:{cause:'Stunted rice may reflect poor fertility, water stress, or pest pressure.',check:['Compare a few sections of the field.','Look for weak roots, yellowing, or feeding damage.'],action:['Improve soil fertility and keep water as steady as possible.','Check for insects or nutrient issues early.'],help:'Persistent stunting with yellowing should be checked by a local adviser.'}},
-  Sorghum:{holes:{cause:'Caterpillars or grasshoppers may chew leaves.',check:['Check growing points and leaf undersides.','Look for feeding on young leaves and stems.'],action:['Hand-pick pests where practical and manage nearby weeds.','Inspect plants again in a few days.'],help:'If damage keeps spreading, local pest advice can help.'},wilting:{cause:'Sorghum can wilt when soil becomes too dry or roots are stressed.',check:['Check soil moisture and root zone.','Look for stem and root damage.'],action:['Water deeply when needed and avoid severe stress.','Keep weeds down and protect the crop from further damage.'],help:'Continue monitoring if plants remain wilted after watering.'},stunted:{cause:'Poor growth may be due to soil stress, water issues, or pest pressure.',check:['Compare plants across a few rows.','Look for yellowing, weak growth, and feeding damage.'],action:['Improve soil and water management.','Keep weeds low and inspect for pests.'],help:'If stunting is common, ask a local adviser to check the field.'}},
-  Banana:{yellow:{cause:'Yellowing may reflect nutrient stress, dry soil, or disease.',check:['Look for streaking or whole-leaf yellowing.','Check soil moisture and whether old leaves are dying naturally.'],action:['Keep soil evenly moist and mulch with clean plant material.','Remove only fully dead leaves.'],help:'If yellowing is streaked or plants wilt, ask a local adviser.'},spots:{cause:'Leaf spots may be a fungal disease such as Sigatoka.',check:['Check older leaves and look for spreading lesions.','Look for leaf crowding or poor airflow.'],action:['Remove badly affected leaves and improve airflow.','Do not move infected leaves between plants.'],help:'If many leaves are affected, a local adviser can help identify the disease.'},wilting:{cause:'Banana plants wilt when roots are stressed or the soil is too dry.',check:['Check the soil moisture and root area.','Look for weak or fallen plants and signs of disease.'],action:['Water evenly and keep soil covered with clean mulch.','Remove severely damaged plants where needed.'],help:'Widespread wilting is a sign to check for root stress or disease.'},stunted:{cause:'Slow banana growth may come from poor nutrition, water stress, or root damage.',check:['Compare nearby plants and check for root or soil issues.','Look for yellowing or weak leaves.'],action:['Keep soil even and add compost where needed.','Remove damaged or diseased plants.'],help:'If several nearby plants are stunted, ask a local adviser.'}},
-  'Sweet potato':{holes:{cause:'Beetles or caterpillars may be feeding on leaves.',check:['Inspect the leaves and stems for chewing damage.','Look for eggs and visible pests.'],action:['Hand-pick pests and eggs where practical.','Keep the plot weeded and use healthy vines.'],help:'Persistent feeding may need local advice and closer scouting.'},yellow:{cause:'Yellowing may be caused by water stress, poor nutrients, or disease.',check:['Check drainage and soil moisture around the vines.','Look for yellowing across many leaves at once.'],action:['Add mature compost and plant healthy vines.','Improve drainage if the area stays wet.'],help:'If yellowing continues, ask a local adviser because virus or root stress may be involved.'},wilting:{cause:'Sweet potato plants wilt when soil is dry or roots are stressed.',check:['Check moisture in the root zone and vine health.','Look for rotting roots or root damage.'],action:['Water carefully and improve drainage if needed.','Remove weak plants if root damage is clear.'],help:'Persistent wilting after watering should be checked by a local adviser.'},stunted:{cause:'Poor sweet potato growth can come from poor nutrition, water stress, or disease.',check:['Compare vines across the plot.','Look for weak vines, yellowing, and root damage.'],action:['Use healthy vines and improve soil fertility.','Keep weeds down and maintain even water.'],help:'If stunting is widespread, local advice is useful.'}},
-  Onion:{yellow:{cause:'Yellowing or tip drying may be caused by water stress, low nutrients, or disease.',check:['Check soil moisture and drainage.','Look for yellowing of older leaves first.'],action:['Water at the soil line and improve drainage.','Remove badly affected plants.'],help:'If yellowing spreads quickly, ask a local adviser about nutrient or disease issues.'},spots:{cause:'Spots may be a fungal leaf disease.',check:['Check whether plants are crowded or leaves stay wet.','Look for lesions spreading from the lower leaves.'],action:['Remove affected leaves and water near the soil.','Thin the crop for better airflow.'],help:'If disease keeps spreading, local advice can help with crop rotation and treatment.'},wilting:{cause:'Onion plants wilt when soil is too dry or roots are stressed.',check:['Check root zone moisture and drainage.','Look for weak bulbs or diseased bases.'],action:['Water evenly and avoid waterlogging.','Remove diseased or collapsed plants.'],help:'If many plants wilt together, inspect the field closely.'},stunted:{cause:'Slow onion growth often comes from poor fertility, water stress, or disease.',check:['Compare plant size across the bed.','Look for yellowing or weak root growth.'],action:['Add compost and keep watering even.','Remove severely affected plants and improve spacing.'],help:'A local adviser can help if growth is poor across the whole bed.'}},
-  Cabbage:{holes:{cause:'Caterpillars such as cabbage worms may be eating leaves.',check:['Check the undersides of leaves and the crown.','Look for eggs or fresh feeding marks.'],action:['Hand-pick larvae and eggs where possible.','Use fine netting over young plants if available.'],help:'If damage keeps spreading, a local adviser can suggest better control options.'},yellow:{cause:'Yellowing can come from water stress, low nutrients, or disease.',check:['Check soil moisture and nutrient status.','Look for weak growth and leaf damage.'],action:['Keep the soil evenly moist and add compost.','Remove badly affected plants.'],help:'If yellowing is widespread, ask a local adviser for a field check.'},spots:{cause:'Spots may be a leaf disease.',check:['Look at the pattern on older and younger leaves.','Check whether overhead watering keeps leaves wet.'],action:['Remove badly affected leaves and avoid overhead watering.','Rotate cabbage with unrelated crops.'],help:'If disease spreads, local advice can help with better crop rotation and control.'},wilting:{cause:'Cabbage plants wilt when the soil is too dry or roots are stressed.',check:['Check soil moisture and the base of the plant.','Look for root or stem damage.'],action:['Water evenly and keep the soil from drying hard.','Remove weak plants if the crown is damaged.'],help:'Rapid wilting across several plants deserves a closer field inspection.'},stunted:{cause:'Stunted cabbage often reflects poor fertility, moisture stress, or disease.',check:['Compare plant size across the bed.','Look for yellowing, weak leaves, and root issues.'],action:['Add compost and keep moisture steady.','Remove badly affected plants and improve spacing.'],help:'If the problem is common, ask a local adviser to check the field.'}}
 
-function currentLanguage() { return document.getElementById('language').value; }
-function symptomName(symptom) { return translations[currentLanguage()].symptoms[symptom] || symptom; }
+const special = {
+  Maize: {
+    holes: {
+      cause: 'Caterpillars, including fall armyworm, may be feeding in the leaf funnel.',
+      check: ['Look inside the whorl and check for fresh frass.', 'Inspect a few plants across the field, not just one damaged area.'],
+      action: ['Hand-pick caterpillars and egg masses where practical.', 'Remove weeds and ask a local adviser about approved biological controls if damage keeps spreading.'],
+      help: 'Fall armyworm can spread quickly, so check new leaves and nearby plants early.'
+    },
+    yellow: {
+      cause: 'Yellowing may be caused by dry or waterlogged soil, low nutrients, or disease.',
+      check: ['Check moisture and drainage in the root zone.', 'Look for mottled or streaked leaves, especially on new growth.'],
+      action: ['Add mature compost and mulch with clean crop residues.', 'Keep water even and avoid waterlogging.'],
+      help: 'If new leaves show mottled streaks, ask a local adviser because disease is more likely.'
+    },
+    wilting: {
+      cause: 'Maize can wilt when the soil is too dry, roots are damaged, or disease is affecting the base of the plant.',
+      check: ['Check the stem base and root zone for rot, cracks, or insect feeding.', 'Look at soil moisture and whether the crop is in a low or waterlogged spot.'],
+      action: ['Water deeply when the soil is dry, but do not leave the crop waterlogged.', 'Pull out badly damaged plants if they are dying quickly.'],
+      help: 'Wilting in several nearby plants can signal a field problem, so get local advice early.'
+    },
+    stunted: {
+      cause: 'Stunted maize often reflects poor soil fertility, water stress, or pest pressure.',
+      check: ['Compare several plants across the bed or field.', 'Look for yellowing, weak roots, or pest feeding near the growing point.'],
+      action: ['Add compost or a small balanced nutrient input where needed.', 'Keep weeds low and improve drainage or watering.'],
+      help: 'If the problem is widespread, a local adviser can help check whether it is soil, pest, or disease related.'
+    }
+  },
+  Cassava: {
+    yellow: {
+      cause: 'Mottled yellow leaves may indicate cassava mosaic disease, and whiteflies can spread it.',
+      check: ['Look for leaf distortion and uneven yellow patterns.', 'Check the planting material and nearby cassava plants.'],
+      action: ['Use healthy cuttings and remove severely diseased plants.', 'Do not rely on compost to cure virus disease.'],
+      help: 'If the disease is spreading, remove infected plants and seek local advice quickly.'
+    },
+    wilting: {
+      cause: 'Cassava can wilt when roots are damaged or when severe drought or disease affects the plant.',
+      check: ['Check whether the soil is very dry or waterlogged.', 'Look for root or stem damage around the base.'],
+      action: ['Water or improve drainage carefully according to soil condition.', 'Remove badly affected plants to reduce spread.'],
+      help: 'If stems or leaves suddenly collapse, get local advice because disease or root stress may be involved.'
+    },
+    stunted: {
+      cause: 'Poor cassava growth may be caused by low fertility, nutrient imbalance, or virus infection.',
+      check: ['Compare plant size across the field.', 'Look for leaf distortion or yellow patterns.'],
+      action: ['Use healthy planting material and add compost where soil is poor.', 'Remove diseased plants before they spread infection.'],
+      help: 'Persistent stunting should be checked by a local adviser if it is common across the stand.'
+    }
+  },
+  Tomato: {
+    spots: {
+      cause: 'Spots can be blight or other leaf disease.',
+      check: ['Check whether leaves are wet and crowded.', 'Look for lesions spreading from lower leaves upward.'],
+      action: ['Remove affected leaves and water at soil level.', 'Stake or prune for airflow and rotate away from tomatoes and potatoes.'],
+      help: 'If disease spreads quickly, ask a local adviser before treating large areas.'
+    },
+    wilting: {
+      cause: 'Tomato plants wilt when soil is dry, roots are damaged, or disease is affecting the stem or roots.',
+      check: ['Check soil moisture and stem base.', 'Look for root rot, stem damage, or severe leaf loss.'],
+      action: ['Water deeply when needed, but avoid waterlogging.', 'Remove badly diseased plants and keep beds clean.'],
+      help: 'Rapid wilting in several plants may mean root or disease problems, so local help is useful.'
+    },
+    stunted: {
+      cause: 'Slow tomato growth often results from poor soil, stress, or disease.',
+      check: ['Look for yellow leaves, weak stems, or root issues.', 'Check whether plants are crowded or waterlogged.'],
+      action: ['Improve soil with compost and keep watering consistent.', 'Thin crowded plants and remove diseased stems.'],
+      help: 'If growth is poor across the bed, ask a local adviser to check for disease or nutrient problems.'
+    }
+  },
+  Beans: {
+    spots: {
+      cause: 'Leaf spots may be fungal or bacterial disease.',
+      check: ['Look for lesions on older leaves and the spread pattern.', 'Check whether plants are crowded or leaves stay wet.'],
+      action: ['Remove badly affected leaves and avoid handling wet plants.', 'Rotate crops and use clean seed next season.'],
+      help: 'If leaf spots spread quickly, local advice can help reduce losses.'
+    },
+    wilting: {
+      cause: 'Bean plants can wilt from water stress or root disease.',
+      check: ['Check soil moisture and the base of the plant.', 'Look for narrow stems or root damage.'],
+      action: ['Water evenly and improve drainage if needed.', 'Remove plants showing severe root or stem damage.'],
+      help: 'Sudden wilting in clusters may need a field check by a local adviser.'
+    },
+    stunted: {
+      cause: 'Poor bean growth may be caused by low soil fertility, water stress, or disease.',
+      check: ['Compare plant size across the plot.', 'Look for yellowing, weak roots, and damaged leaves.'],
+      action: ['Add compost where soil is poor and keep moisture steady.', 'Remove very weak or diseased plants.'],
+      help: 'If many plants are stunted, ask a local adviser because the cause may be soil, pest, or disease.'
+    }
+  },
+  Cowpea: {
+    holes: {
+      cause: 'Aphids, beetles, or caterpillars may be feeding.',
+      check: ['Inspect leaf undersides and growing tips.', 'Look for damaged new leaves and insect activity.'],
+      action: ['Hand-pick larger pests and remove heavily infested leaves.', 'Keep the field weeded and inspect frequently.'],
+      help: 'Regular scouting helps prevent damage from spreading to the whole crop.'
+    },
+    wilting: {
+      cause: 'Cowpea can wilt when soil is too dry or roots are damaged.',
+      check: ['Check soil moisture and the base of the stem.', 'Look for feeding damage or root decay.'],
+      action: ['Water deeply when needed and avoid waterlogging.', 'Remove damaged plants if they are collapsing.'],
+      help: 'If wilt spreads quickly, ask a local adviser because it may be more than water stress.'
+    },
+    stunted: {
+      cause: 'Poor growth may come from low fertility, water problems, or pest pressure.',
+      check: ['Compare several plants across the field.', 'Check for yellowing, weak roots, and feeding damage.'],
+      action: ['Add compost and keep weed pressure low.', 'Water evenly and remove badly affected plants.'],
+      help: 'A local adviser can help if stunting is common across the field.'
+    }
+  },
+  Groundnut: {
+    spots: {
+      cause: 'Leaf spots may be early or late leaf spot disease.',
+      check: ['Look at leaf age and distribution across the field.', 'Check whether plants are crowded or leaves stay wet.'],
+      action: ['Remove crop debris after harvest and rotate with a non-legume crop.', 'Avoid crowding plants and keep spacing consistent.'],
+      help: 'If disease spreads fast, local advice can help plan a safer rotation and treatment.'
+    },
+    wilting: {
+      cause: 'Groundnut can wilt from dry soil, root stress, or disease.',
+      check: ['Check moisture in the root zone and plant base.', 'Look for root rots or damage around the crown.'],
+      action: ['Water or improve drainage based on soil condition.', 'Remove weak or dying plants to reduce pressure on the rest.'],
+      help: 'If many plants wilt together, inspect the field more closely for root or disease problems.'
+    },
+    stunted: {
+      cause: 'Poor growth often reflects poor soil, water stress, or disease.',
+      check: ['Compare plants across the whole plot.', 'Look for yellowing, weak roots, and leaf damage.'],
+      action: ['Improve soil with compost and keep watering consistent.', 'Remove badly affected plants when needed.'],
+      help: 'If the issue is widespread, a local adviser should inspect the field.'
+    }
+  },
+  Rice: {
+    yellow: {
+      cause: 'Yellowing may be caused by water stress, low nutrients, or pests.',
+      check: ['Check water management and the stem base.', 'Look for insects or nutrient deficiency patterns.'],
+      action: ['Keep water conditions steady where possible.', 'Check field edges and stem bases before adding inputs.'],
+      help: 'If yellowing is spreading quickly, a local rice adviser should inspect the field.'
+    },
+    holes: {
+      cause: 'Leaf folder or other caterpillars may be feeding.',
+      check: ['Check folded leaves and the leaf bases.', 'Look for fresh feeding and larvae.'],
+      action: ['Hand-pick caterpillars and keep field edges clean.', 'Protect beneficial insects and check again after a few days.'],
+      help: 'Repeated feeding across the field may need local pest advice.'
+    },
+    wilting: {
+      cause: 'Rice can wilt when water is not managed well or roots are damaged.',
+      check: ['Check soil water level and field drainage.', 'Look for root stress and stem damage.'],
+      action: ['Balance water management and improve drainage where needed.', 'Avoid heavy stress during a hot period.'],
+      help: 'If lowering water or improving drainage does not help, local advice is useful.'
+    },
+    stunted: {
+      cause: 'Stunted rice may reflect poor fertility, water stress, or pest pressure.',
+      check: ['Compare a few sections of the field.', 'Look for weak roots, yellowing, or feeding damage.'],
+      action: ['Improve soil fertility and keep water as steady as possible.', 'Check for insects or nutrient issues early.'],
+      help: 'Persistent stunting with yellowing should be checked by a local adviser.'
+    }
+  },
+  Sorghum: {
+    holes: {
+      cause: 'Caterpillars or grasshoppers may chew leaves.',
+      check: ['Check growing points and leaf undersides.', 'Look for feeding on young leaves and stems.'],
+      action: ['Hand-pick pests where practical and manage nearby weeds.', 'Inspect plants again in a few days.'],
+      help: 'If damage keeps spreading, local pest advice can help.'
+    },
+    wilting: {
+      cause: 'Sorghum can wilt when soil becomes too dry or roots are stressed.',
+      check: ['Check soil moisture and root zone.', 'Look for stem and root damage.'],
+      action: ['Water deeply when needed and avoid severe stress.', 'Keep weeds down and protect the crop from further damage.'],
+      help: 'Continue monitoring if plants remain wilted after watering.'
+    },
+    stunted: {
+      cause: 'Poor growth may be due to soil stress, water issues, or pest pressure.',
+      check: ['Compare plants across a few rows.', 'Look for yellowing, weak growth, and feeding damage.'],
+      action: ['Improve soil and water management.', 'Keep weeds low and inspect for pests.'],
+      help: 'If stunting is common, ask a local adviser to check the field.'
+    }
+  },
+  Banana: {
+    yellow: {
+      cause: 'Yellowing may reflect nutrient stress, dry soil, or disease.',
+      check: ['Look for streaking or whole-leaf yellowing.', 'Check soil moisture and whether old leaves are dying naturally.'],
+      action: ['Keep soil evenly moist and mulch with clean plant material.', 'Remove only fully dead leaves.'],
+      help: 'If yellowing is streaked or plants wilt, ask a local adviser.'
+    },
+    spots: {
+      cause: 'Leaf spots may be a fungal disease such as Sigatoka.',
+      check: ['Check older leaves and look for spreading lesions.', 'Look for leaf crowding or poor airflow.'],
+      action: ['Remove badly affected leaves and improve airflow.', 'Do not move infected leaves between plants.'],
+      help: 'If many leaves are affected, a local adviser can help identify the disease.'
+    },
+    wilting: {
+      cause: 'Banana plants wilt when roots are stressed or the soil is too dry.',
+      check: ['Check the soil moisture and root area.', 'Look for weak or fallen plants and signs of disease.'],
+      action: ['Water evenly and keep soil covered with clean mulch.', 'Remove severely damaged plants where needed.'],
+      help: 'Widespread wilting is a sign to check for root stress or disease.'
+    },
+    stunted: {
+      cause: 'Slow banana growth may come from poor nutrition, water stress, or root damage.',
+      check: ['Compare nearby plants and check for root or soil issues.', 'Look for yellowing or weak leaves.'],
+      action: ['Keep soil even and add compost where needed.', 'Remove damaged or diseased plants.'],
+      help: 'If several nearby plants are stunted, ask a local adviser.'
+    }
+  },
+  'Sweet potato': {
+    holes: {
+      cause: 'Beetles or caterpillars may be feeding on leaves.',
+      check: ['Inspect the leaves and stems for chewing damage.', 'Look for eggs and visible pests.'],
+      action: ['Hand-pick pests and eggs where practical.', 'Keep the plot weeded and use healthy vines.'],
+      help: 'Persistent feeding may need local advice and closer scouting.'
+    },
+    yellow: {
+      cause: 'Yellowing may be caused by water stress, poor nutrients, or disease.',
+      check: ['Check drainage and soil moisture around the vines.', 'Look for yellowing across many leaves at once.'],
+      action: ['Add mature compost and plant healthy vines.', 'Improve drainage if the area stays wet.'],
+      help: 'If yellowing continues, ask a local adviser because virus or root stress may be involved.'
+    },
+    wilting: {
+      cause: 'Sweet potato plants wilt when soil is dry or roots are stressed.',
+      check: ['Check moisture in the root zone and vine health.', 'Look for rotting roots or root damage.'],
+      action: ['Water carefully and improve drainage if needed.', 'Remove weak plants if root damage is clear.'],
+      help: 'Persistent wilting after watering should be checked by a local adviser.'
+    },
+    stunted: {
+      cause: 'Poor sweet potato growth can come from poor nutrition, water stress, or disease.',
+      check: ['Compare vines across the plot.', 'Look for weak vines, yellowing, and root damage.'],
+      action: ['Use healthy vines and improve soil fertility.', 'Keep weeds down and maintain even water.'],
+      help: 'If stunting is widespread, local advice is useful.'
+    }
+  },
+  Onion: {
+    yellow: {
+      cause: 'Yellowing or tip drying may be caused by water stress, low nutrients, or disease.',
+      check: ['Check soil moisture and drainage.', 'Look for yellowing of older leaves first.'],
+      action: ['Water at the soil line and improve drainage.', 'Remove badly affected plants.'],
+      help: 'If yellowing spreads quickly, ask a local adviser about nutrient or disease issues.'
+    },
+    spots: {
+      cause: 'Spots may be a fungal leaf disease.',
+      check: ['Check whether plants are crowded or leaves stay wet.', 'Look for lesions spreading from the lower leaves.'],
+      action: ['Remove affected leaves and water near the soil.', 'Thin the crop for better airflow.'],
+      help: 'If disease keeps spreading, local advice can help with crop rotation and treatment.'
+    },
+    wilting: {
+      cause: 'Onion plants wilt when soil is too dry or roots are stressed.',
+      check: ['Check root zone moisture and drainage.', 'Look for weak bulbs or diseased bases.'],
+      action: ['Water evenly and avoid waterlogging.', 'Remove diseased or collapsed plants.'],
+      help: 'If many plants wilt together, inspect the field closely.'
+    },
+    stunted: {
+      cause: 'Slow onion growth often comes from poor fertility, water stress, or disease.',
+      check: ['Compare plant size across the bed.', 'Look for yellowing or weak root growth.'],
+      action: ['Add compost and keep watering even.', 'Remove severely affected plants and improve spacing.'],
+      help: 'A local adviser can help if growth is poor across the whole bed.'
+    }
+  },
+  Cabbage: {
+    holes: {
+      cause: 'Caterpillars such as cabbage worms may be eating leaves.',
+      check: ['Check the undersides of leaves and the crown.', 'Look for eggs or fresh feeding marks.'],
+      action: ['Hand-pick larvae and eggs where possible.', 'Use fine netting over young plants if available.'],
+      help: 'If damage keeps spreading, a local adviser can suggest better control options.'
+    },
+    yellow: {
+      cause: 'Yellowing can come from water stress, low nutrients, or disease.',
+      check: ['Check soil moisture and nutrient status.', 'Look for weak growth and leaf damage.'],
+      action: ['Keep the soil evenly moist and add compost.', 'Remove badly affected plants.'],
+      help: 'If yellowing is widespread, ask a local adviser for a field check.'
+    },
+    spots: {
+      cause: 'Spots may be a leaf disease.',
+      check: ['Look at the pattern on older and younger leaves.', 'Check whether overhead watering keeps leaves wet.'],
+      action: ['Remove badly affected leaves and avoid overhead watering.', 'Rotate cabbage with unrelated crops.'],
+      help: 'If disease spreads, local advice can help with better crop rotation and control.'
+    },
+    wilting: {
+      cause: 'Cabbage plants wilt when the soil is too dry or roots are stressed.',
+      check: ['Check soil moisture and the base of the plant.', 'Look for root or stem damage.'],
+      action: ['Water evenly and keep the soil from drying hard.', 'Remove weak plants if the crown is damaged.'],
+      help: 'Rapid wilting across several plants deserves a closer field inspection.'
+    },
+    stunted: {
+      cause: 'Stunted cabbage often reflects poor fertility, moisture stress, or disease.',
+      check: ['Compare plant size across the bed.', 'Look for yellowing, weak leaves, and root issues.'],
+      action: ['Add compost and keep moisture steady.', 'Remove badly affected plants and improve spacing.'],
+      help: 'If the problem is common, ask a local adviser to check the field.'
+    }
+  }
+};
+
+function currentLanguage() {
+  return document.getElementById('language').value;
+}
+
+function symptomName(symptom) {
+  return translations[currentLanguage()].symptoms[symptom] || symptom;
+}
+
 function saveState() {
   const state = {
     crop: document.getElementById('crop').value,
@@ -92,6 +591,7 @@ function saveState() {
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
+
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
@@ -100,72 +600,97 @@ function loadState() {
     if (saved.selected) {
       const btn = document.querySelector('#quick .symptom-btn[data-sign="' + saved.selected + '"]');
       if (btn) {
-        document.querySelectorAll('#quick .symptom-btn').forEach(el => el.classList.toggle('is-selected', el === btn));
+        document.querySelectorAll('#quick .symptom-btn').forEach((el) => {
+          el.classList.toggle('is-selected', el === btn);
+        });
         renderAdvice(document.getElementById('crop').value, saved.selected);
       }
     }
-  } catch (e) {}
+  } catch (error) {
+    // ignore bad local data
+  }
 }
+
 function applyLanguage() {
   const lang = currentLanguage();
   const t = translations[lang];
+
   document.getElementById('subtitle').textContent = t.subtitle;
   document.getElementById('crop-label').textContent = t.cropLabel;
   document.getElementById('language-label').textContent = t.languageLabel;
   document.getElementById('symptom-label').textContent = t.symptomLabel;
   document.getElementById('footer-note').textContent = t.footerNote;
   document.getElementById('reset-btn').textContent = t.reset;
-  document.querySelectorAll('#quick .symptom-btn').forEach(btn => {
-    btn.textContent = (btn.dataset.sign === 'yellow' ? '🟡 ' : btn.dataset.sign === 'holes' ? '🐛 ' : btn.dataset.sign === 'spots' ? '🟤 ' : btn.dataset.sign === 'wilting' ? '🌿 ' : '📉 ') + t.symptoms[btn.dataset.sign];
+
+  document.querySelectorAll('#quick .symptom-btn').forEach((btn) => {
+    const icon = btn.dataset.sign === 'yellow' ? '🟡 ' : btn.dataset.sign === 'holes' ? '🐛 ' : btn.dataset.sign === 'spots' ? '🟤 ' : btn.dataset.sign === 'wilting' ? '🌿 ' : '📉 ';
+    btn.textContent = icon + t.symptoms[btn.dataset.sign];
   });
+
   const active = document.querySelector('#quick .symptom-btn.is-selected');
-  if (active) renderAdvice(document.getElementById('crop').value, active.dataset.sign);
+  if (active) {
+    renderAdvice(document.getElementById('crop').value, active.dataset.sign);
+  }
+
   saveState();
 }
+
 function getAdvice(crop, symptom) {
   const cropAdvice = special[crop] && special[crop][symptom];
   return cropAdvice || common[symptom] || common.yellow;
 }
+
 function renderAdvice(crop, symptom) {
   const advice = getAdvice(crop, symptom);
   const result = document.getElementById('result');
   const t = translations[currentLanguage()].result;
+
   result.innerHTML = `
     <div class="tag">${crop} • ${symptomName(symptom)}</div>
     <h2>${t.possible}</h2>
     <p>${advice.cause}</p>
     <h3>${t.check}</h3>
-    <ul>${(advice.check || []).map(item => `<li>${item}</li>`).join('')}</ul>
+    <ul>${(advice.check || []).map((item) => `<li>${item}</li>`).join('')}</ul>
     <h3>${t.action}</h3>
-    <ul>${(advice.action || []).map(item => `<li>${item}</li>`).join('')}</ul>
+    <ul>${(advice.action || []).map((item) => `<li>${item}</li>`).join('')}</ul>
     <h3>${t.help}</h3>
     <p>${advice.help}</p>
   `;
+
   result.hidden = false;
   result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   saveState();
 }
+
 function resetApp() {
   document.getElementById('crop').selectedIndex = 0;
-  document.querySelectorAll('#quick .symptom-btn').forEach(btn => btn.classList.remove('is-selected'));
+  document.querySelectorAll('#quick .symptom-btn').forEach((btn) => btn.classList.remove('is-selected'));
   document.getElementById('result').hidden = true;
   document.getElementById('result').innerHTML = '';
   localStorage.removeItem(STORAGE_KEY);
 }
 
-document.getElementById('quick').addEventListener('click', e => {
-  const button = e.target.closest('[data-sign]');
+document.getElementById('quick').addEventListener('click', (event) => {
+  const button = event.target.closest('[data-sign]');
   if (!button) return;
+
   const crop = document.getElementById('crop').value;
   const symptom = button.dataset.sign;
-  document.querySelectorAll('#quick .symptom-btn').forEach(btn => btn.classList.toggle('is-selected', btn === button));
+
+  document.querySelectorAll('#quick .symptom-btn').forEach((btn) => {
+    btn.classList.toggle('is-selected', btn === button);
+  });
+
   renderAdvice(crop, symptom);
 });
 
 document.getElementById('crop').addEventListener('change', () => {
   const active = document.querySelector('#quick .symptom-btn.is-selected');
-  if (active) renderAdvice(document.getElementById('crop').value, active.dataset.sign);
-  else saveState();
+  if (active) {
+    renderAdvice(document.getElementById('crop').value, active.dataset.sign);
+  } else {
+    saveState();
+  }
 });
 
 document.getElementById('language').addEventListener('change', applyLanguage);
@@ -173,4 +698,6 @@ document.getElementById('reset-btn').addEventListener('click', resetApp);
 
 applyLanguage();
 loadState();
-</script></body></html>
+</script>
+</body>
+</html>
