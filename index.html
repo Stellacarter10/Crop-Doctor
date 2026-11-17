@@ -4,15 +4,16 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#176b3a">
 <title>Crop Doctor — Leaf Check</title>
 <style>
-:root{font:18px/1.45 system-ui,sans-serif;color:#173321;background:#eef6eb;--green:#176b3a;--green-dark:#113f29;--green-soft:#e8f3e4;--gold:#e4a927;--muted:#4f6556;--card:#ffffff;--danger:#8a3b27}*{box-sizing:border-box}body{margin:0 auto;padding:12px;max-width:560px}main{background:var(--card);border-radius:18px;padding:18px;box-shadow:0 8px 26px rgba(23,107,58,.08)}h1{font-size:1.6rem;color:var(--green);margin:0 0 .25rem}p{margin:.35rem 0 1rem}label{display:block;font-weight:700;margin-top:.9rem}select,button{width:100%;min-height:54px;margin-top:.45rem;padding:10px;border:2px solid #4d7a5f;border-radius:12px;background:white;color:#173321;font:inherit}select{font-size:1.05rem}#quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:.5rem}#quick button{padding:10px 8px;font-size:.95rem;font-weight:700;line-height:1.2;display:flex;align-items:center;justify-content:center;text-align:center;min-height:64px;transition:all .15s ease}#quick button.is-selected{background:var(--green);color:white;border-color:var(--green);box-shadow:0 4px 12px rgba(23,107,58,.22)}#quick button:active{transform:translateY(1px)}button:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}#result{margin-top:1rem;padding:16px;background:var(--green-soft);border-left:5px solid var(--green);border-radius:12px}#result .tag{display:inline-block;padding:.28rem .6rem;border-radius:999px;background:#dfeee0;color:var(--green-dark);font-size:.8rem;font-weight:700;margin-bottom:.7rem}#result h2{font-size:1rem;margin:.3rem 0 .5rem;color:var(--green-dark)}#result h3{font-size:.9rem;margin:.9rem 0 .35rem;color:var(--green-dark)}#result p, #result li{margin:.25rem 0}#result ul{padding-left:1.2rem;margin:.3rem 0 0}small{display:block;margin-top:1rem;color:var(--muted);line-height:1.5}[hidden]{display:none!important}@media(max-width:360px){body{padding:8px}main{padding:12px}#quick{grid-template-columns:1fr}#quick button{min-height:52px}}
+:root{font:18px/1.45 system-ui,sans-serif;color:#173321;background:#eef6eb;--green:#176b3a;--green-dark:#113f29;--green-soft:#e8f3e4;--gold:#e4a927;--muted:#4f6556;--card:#ffffff;--danger:#8a3b27}*{box-sizing:border-box}body{margin:0 auto;padding:12px;max-width:560px}main{background:var(--card);border-radius:18px;padding:18px;box-shadow:0 8px 26px rgba(23,107,58,.08)}h1{font-size:1.6rem;color:var(--green);margin:0 0 .25rem}p{margin:.35rem 0 1rem}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:block}label{display:block;font-weight:700;margin-top:.9rem}select,button{width:100%;min-height:54px;margin-top:.45rem;padding:10px;border:2px solid #4d7a5f;border-radius:12px;background:white;color:#173321;font:inherit}select{font-size:1.05rem}#quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:.5rem}#quick button{padding:10px 8px;font-size:.95rem;font-weight:700;line-height:1.2;display:flex;align-items:center;justify-content:center;text-align:center;min-height:64px;transition:all .15s ease}#quick button.is-selected{background:var(--green);color:white;border-color:var(--green);box-shadow:0 4px 12px rgba(23,107,58,.22)}#quick button:active{transform:translateY(1px)}button:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}#result{margin-top:1rem;padding:16px;background:var(--green-soft);border-left:5px solid var(--green);border-radius:12px}#result .tag{display:inline-block;padding:.28rem .6rem;border-radius:999px;background:#dfeee0;color:var(--green-dark);font-size:.8rem;font-weight:700;margin-bottom:.7rem}#result h2{font-size:1rem;margin:.3rem 0 .5rem;color:var(--green-dark)}#result h3{font-size:.9rem;margin:.9rem 0 .35rem;color:var(--green-dark)}#result p, #result li{margin:.25rem 0}#result ul{padding-left:1.2rem;margin:.3rem 0 0}small{display:block;margin-top:1rem;color:var(--muted);line-height:1.5}[hidden]{display:none!important}@media(max-width:360px){body{padding:8px}main{padding:12px}.row,#quick{grid-template-columns:1fr}#quick button{min-height:52px}}
 </style>
 </head>
 <body><main>
-<h1>🌱 Crop Doctor</h1><p>Choose your crop, then tap a symptom for quick advice. Works offline.</p>
-<label for="crop">What are you growing?</label><select id="crop">
-<option>Maize</option><option>Cassava</option><option>Tomato</option><option>Beans</option><option>Cowpea</option><option>Groundnut</option><option>Rice</option><option>Sorghum</option><option>Banana</option><option>Sweet potato</option><option>Onion</option><option>Cabbage</option>
-</select>
-<label>Tap the main symptom</label><div id="quick">
+<h1>🌱 Crop Doctor</h1><p id="subtitle">Choose your crop, then tap a symptom for quick advice. Works offline.</p>
+<div class="row">
+  <div class="field"><label id="crop-label" for="crop">What are you growing?</label><select id="crop"><option>Maize</option><option>Cassava</option><option>Tomato</option><option>Beans</option><option>Cowpea</option><option>Groundnut</option><option>Rice</option><option>Sorghum</option><option>Banana</option><option>Sweet potato</option><option>Onion</option><option>Cabbage</option></select></div>
+  <div class="field"><label id="language-label" for="language">Language</label><select id="language"><option value="en">English</option><option value="sw">Kiswahili</option></select></div>
+</div>
+<label id="symptom-label">Tap the main symptom</label><div id="quick">
 <button data-sign="yellow">🟡 Yellow leaves</button>
 <button data-sign="holes">🐛 Holes / bites</button>
 <button data-sign="spots">🟤 Spots / patches</button>
@@ -20,10 +21,42 @@
 <button data-sign="stunted">📉 Poor growth / stunted</button>
 </div>
 <section id="result" aria-live="polite" hidden></section>
-<small>Possible causes only, not a sure diagnosis. Check several plants. Use mature compost and clean mulch; ask a local farm adviser if damage spreads quickly. Avoid sprays near harvest and follow local safety advice.</small>
+<small id="footer-note">Possible causes only, not a sure diagnosis. Check several plants. Use mature compost and clean mulch; ask a local farm adviser if damage spreads quickly. Avoid sprays near harvest and follow local safety advice.</small>
 </main>
 <script>
-const symptomLabels={yellow:'Yellow leaves',holes:'Holes / bites',spots:'Spots / patches',wilting:'Wilting / drooping',stunted:'Poor growth / stunted'};
+const translations = {
+  en: {
+    subtitle: 'Choose your crop, then tap a symptom for quick advice. Works offline.',
+    cropLabel: 'What are you growing?',
+    languageLabel: 'Language',
+    symptomLabel: 'Tap the main symptom',
+    footerNote: 'Possible causes only, not a sure diagnosis. Check several plants. Use mature compost and clean mulch; ask a local farm adviser if damage spreads quickly. Avoid sprays near harvest and follow local safety advice.',
+    symptoms: {
+      yellow: 'Yellow leaves',
+      holes: 'Holes / bites',
+      spots: 'Spots / patches',
+      wilting: 'Wilting / drooping',
+      stunted: 'Poor growth / stunted'
+    },
+    result: { possible: 'Possible cause', check: 'Check in the field', action: 'Low-cost next step', help: 'Ask for help if…' }
+  },
+  sw: {
+    subtitle: 'Chagua mazao yako, kisha gusa dalili kwa ushauri wa haraka. Hufanya kazi bila intaneti.',
+    cropLabel: 'Unalima nini?',
+    languageLabel: 'Lugha',
+    symptomLabel: 'Gusa dalili kuu',
+    footerNote: 'Hii ni sababu inayowezekana tu, si utambuzi wa uhakika. Angalia mimea kadhaa. Tumia komposti iliyokomaa na mchanganyiko safi; uliza mshauri wa kilimo endapo uharibifu unaenea haraka. Epuka dawa karibu na kuvuna na fuata ushauri wa usalama wa eneo hilo.',
+    symptoms: {
+      yellow: 'Majani ya manjano',
+      holes: 'Madoadoa / kuumwa',
+      spots: 'Madoadoa / vidonda',
+      wilting: 'Kulegea / kupungua',
+      stunted: 'Ukuaji mbovu / kukosa nguvu'
+    },
+    result: { possible: 'Sababu inayowezekana', check: 'Angalia shambani', action: 'Hatua ya gharama ndogo', help: 'Uliza usaidizi kama…' }
+  }
+};
+
 const common={
   yellow:{cause:'Yellowing often comes from water stress, poor soil fertility, or disease.',check:['Look at soil moisture and drainage.','Check whether the yellowing begins at the leaf tips, edges, or between veins.','Look for other signs like weak growth or leaf streaking.'],action:['Add mature compost or a small balanced fertilizer if the soil is poor.','Use clean mulch and keep water even, not too wet or too dry.'],help:'If the whole field is yellowing quickly or leaves are mottled, ask a local adviser because disease or nutrient problems may be spreading.'},
   holes:{cause:'Chewing insects or caterpillars may be feeding on the leaves.',check:['Check leaf surfaces, growing tips, and the undersides of leaves.','Look for frass, egg masses, and damaged new growth.'],action:['Hand-pick large pests and egg masses where possible.','Remove weeds around the field and check again in a few days.'],help:'If damage continues after a few days, a local adviser can help identify the pest and suggest safe control.'},
@@ -45,6 +78,29 @@ const special={
   Onion:{yellow:{cause:'Yellowing or tip drying may be caused by water stress, low nutrients, or disease.',check:['Check soil moisture and drainage.','Look for yellowing of older leaves first.'],action:['Water at the soil line and improve drainage.','Remove badly affected plants.'],help:'If yellowing spreads quickly, ask a local adviser about nutrient or disease issues.'},spots:{cause:'Spots may be a fungal leaf disease.',check:['Check whether plants are crowded or leaves stay wet.','Look for lesions spreading from the lower leaves.'],action:['Remove affected leaves and water near the soil.','Thin the crop for better airflow.'],help:'If disease keeps spreading, local advice can help with crop rotation and treatment.'},wilting:{cause:'Onion plants wilt when soil is too dry or roots are stressed.',check:['Check root zone moisture and drainage.','Look for weak bulbs or diseased bases.'],action:['Water evenly and avoid waterlogging.','Remove diseased or collapsed plants.'],help:'If many plants wilt together, inspect the field closely.'},stunted:{cause:'Slow onion growth often comes from poor fertility, water stress, or disease.',check:['Compare plant size across the bed.','Look for yellowing or weak root growth.'],action:['Add compost and keep watering even.','Remove severely affected plants and improve spacing.'],help:'A local adviser can help if growth is poor across the whole bed.'}},
   Cabbage:{holes:{cause:'Caterpillars such as cabbage worms may be eating leaves.',check:['Check the undersides of leaves and the crown.','Look for eggs or fresh feeding marks.'],action:['Hand-pick larvae and eggs where possible.','Use fine netting over young plants if available.'],help:'If damage keeps spreading, a local adviser can suggest better control options.'},yellow:{cause:'Yellowing can come from water stress, low nutrients, or disease.',check:['Check soil moisture and nutrient status.','Look for weak growth and leaf damage.'],action:['Keep the soil evenly moist and add compost.','Remove badly affected plants.'],help:'If yellowing is widespread, ask a local adviser for a field check.'},spots:{cause:'Spots may be a leaf disease.',check:['Look at the pattern on older and younger leaves.','Check whether overhead watering keeps leaves wet.'],action:['Remove badly affected leaves and avoid overhead watering.','Rotate cabbage with unrelated crops.'],help:'If disease spreads, local advice can help with better crop rotation and control.'},wilting:{cause:'Cabbage plants wilt when the soil is too dry or roots are stressed.',check:['Check soil moisture and the base of the plant.','Look for root or stem damage.'],action:['Water evenly and keep the soil from drying hard.','Remove weak plants if the crown is damaged.'],help:'Rapid wilting across several plants deserves a closer field inspection.'},stunted:{cause:'Stunted cabbage often reflects poor fertility, moisture stress, or disease.',check:['Compare plant size across the bed.','Look for yellowing, weak leaves, and root issues.'],action:['Add compost and keep moisture steady.','Remove badly affected plants and improve spacing.'],help:'If the problem is common, ask a local adviser to check the field.'}}
 
+function currentLanguage() {
+  return document.getElementById('language').value;
+}
+
+function symptomName(symptom) {
+  return translations[currentLanguage()].symptoms[symptom] || symptom;
+}
+
+function applyLanguage() {
+  const lang = currentLanguage();
+  const t = translations[lang];
+  document.getElementById('subtitle').textContent = t.subtitle;
+  document.getElementById('crop-label').textContent = t.cropLabel;
+  document.getElementById('language-label').textContent = t.languageLabel;
+  document.getElementById('symptom-label').textContent = t.symptomLabel;
+  document.getElementById('footer-note').textContent = t.footerNote;
+  document.querySelectorAll('#quick button').forEach(btn => {
+    btn.textContent = (btn.dataset.sign === 'yellow' ? '🟡 ' : btn.dataset.sign === 'holes' ? '🐛 ' : btn.dataset.sign === 'spots' ? '🟤 ' : btn.dataset.sign === 'wilting' ? '🌿 ' : '📉 ') + t.symptoms[btn.dataset.sign];
+  });
+  const active = document.querySelector('#quick button.is-selected');
+  if (active) renderAdvice(document.getElementById('crop').value, active.dataset.sign);
+}
+
 function getAdvice(crop, symptom) {
   const cropAdvice = special[crop] && special[crop][symptom];
   return cropAdvice || common[symptom] || common.yellow;
@@ -53,15 +109,16 @@ function getAdvice(crop, symptom) {
 function renderAdvice(crop, symptom) {
   const advice = getAdvice(crop, symptom);
   const result = document.getElementById('result');
+  const t = translations[currentLanguage()].result;
   result.innerHTML = `
-    <div class="tag">${crop} • ${symptomLabels[symptom]}</div>
-    <h2>Possible cause</h2>
+    <div class="tag">${crop} • ${symptomName(symptom)}</div>
+    <h2>${t.possible}</h2>
     <p>${advice.cause}</p>
-    <h3>Check in the field</h3>
+    <h3>${t.check}</h3>
     <ul>${(advice.check || []).map(item => `<li>${item}</li>`).join('')}</ul>
-    <h3>Low-cost next step</h3>
+    <h3>${t.action}</h3>
     <ul>${(advice.action || []).map(item => `<li>${item}</li>`).join('')}</ul>
-    <h3>Ask for help if…</h3>
+    <h3>${t.help}</h3>
     <p>${advice.help}</p>
   `;
   result.hidden = false;
@@ -81,4 +138,8 @@ document.getElementById('crop').addEventListener('change', () => {
   const active = document.querySelector('#quick button.is-selected');
   if (active) renderAdvice(document.getElementById('crop').value, active.dataset.sign);
 });
+
+document.getElementById('language').addEventListener('change', applyLanguage);
+
+applyLanguage();
 </script></body></html>
