@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#176b3a">
+<title>Crop Doctor — Leaf Check</title>
+<style>
+:root{color-scheme:light;font:18px system-ui,sans-serif;background:#f3f7ed;color:#173321}*{box-sizing:border-box}body{margin:auto;padding:1rem;max-width:560px}main{background:white;border-radius:18px;padding:1.25rem;box-shadow:0 4px 20px #17332118}h1{color:#176b3a;margin:.2rem 0}p{line-height:1.45}label{display:block;font-weight:650;margin-top:1rem}select,button{width:100%;font:inherit;padding:.8rem;margin-top:.35rem;border:2px solid #47745a;border-radius:10px;background:white;color:inherit}button{background:#176b3a;color:white;font-weight:700;border:0;margin-top:1.2rem}#result{margin-top:1rem;padding:1rem;background:#edf6e9;border-left:5px solid #176b3a;border-radius:8px}small{display:block;margin-top:1rem;color:#425548}
+</style>
+</head>
+<body><main>
+<h1>🌱 Crop Doctor</h1><p>Choose your crop and the leaf symptom you see. Works offline; advice is a first check, not a certain diagnosis.</p>
+<label for="crop">Crop</label><select id="crop"><option>Maize</option><option>Cassava</option><option>Tomato</option></select>
+<label for="symptom">Main symptom</label><select id="symptom"><option value="yellow">Yellowing</option><option value="holes">Holes or chewed edges</option><option value="spots">Spots or patches</option></select>
+<button id="check">Show low-cost next steps</button><section id="result" aria-live="polite" hidden></section>
+<small>Check several plants. Ask a local extension worker if symptoms spread quickly or you are unsure. Never eat treated leaves; test sprays on a few leaves first.</small>
+</main>
+<script>
+const advice={
+Maize:{yellow:['Possible drought, poor drainage, or low soil nutrients.','Check soil moisture; mulch with crop residue and add mature compost around plants.'],holes:['Possible caterpillars, including fall armyworm.','Inspect the leaf whorl and hand-pick caterpillars or egg masses; place them in soapy water. Ask locally about safe biological controls.'],spots:['Possible leaf disease; several causes look alike.','Remove badly affected leaves, avoid overhead watering, and rotate crops. Get local advice if lesions spread.']},
+Cassava:{yellow:['Yellowing can have many causes; leaf mosaic or whiteflies are possible.','Check for curled or mottled leaves and tiny whiteflies. Remove severely affected plants; use healthy cuttings and ask an extension worker about local control.'],holes:['Possible leaf-eating insects.','Hand-pick visible insects and egg masses; keep the plot weeded and check plants often.'],spots:['Possible leaf disease or pest damage.','Remove badly affected leaves, avoid wetting foliage, and ask locally if new spots keep appearing.']},
+Tomato:{yellow:['Possible watering stress, nutrient issues, or disease.','Water at the soil, keep it evenly moist, and add mature compost; check whether yellowing starts on older or newer leaves.'],holes:['Possible caterpillars or other chewing insects.','Inspect leaf undersides and stems; hand-pick pests and egg masses. Keep weeds down and check daily.'],spots:['Possible fungal or bacterial disease; spots alone cannot confirm which.','Remove affected leaves, water at soil level, improve airflow, and do not compost diseased plants. Seek local advice if spreading.']}};
+document.getElementById('check').addEventListener('click',()=>{const r=advice[document.getElementById('crop').value][document.getElementById('symptom').value],box=document.getElementById('result');box.innerHTML='<strong>Possible cause:</strong> '+r[0]+'<br><br><strong>Try this:</strong> '+r[1];box.hidden=false;});
+</script></body></html>
